@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<head>
+    <title>URI Decoder + UpperCaser</title>
+    <style>
+        .name {
+            margin: 10px 0 10px;
+            display:block;
+            font-weight: bold;
+        }
+        .res {
+            display: block;
+            margin: 10px 0 10px;
+        }
+        .field {
+            width: 40%;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            document.getElementById('btn').addEventListener('click', work);
+            
+            function work() {
+                var originText = document.getElementsByName('upper')[0].value;
+                if (originText) {
+                    var convText = originText.toUpperCase();
+                    document.getElementById('upperRes').innerHTML = convText;
+                }
+                else {
+                    document.getElementById('upperRes').innerHTML = "";
+                }
+
+                var originURI = document.getElementsByName('URID')[0].value;
+                if (originURI) {
+                    var convURI = decodeURIComponent(originURI);
+                    document.getElementById('URIRes').innerHTML = convURI;
+                }
+                else {
+                    document.getElementById('URIRes').innerHTML = "";
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <span class="name">To UpperCase string</span>
+    <input class="field" type="text" name="upper" value=""/>
+    <span id="upperRes" class="res"></span>
+
+    <span class="name">URI Decoder</span>
+    <textarea class="field" name="URID" value="" rows="10"></textarea>
+    <span id="URIRes" class="res"></span>
+
+    <input type="button" id="btn" value="Convert" />
+</body>
