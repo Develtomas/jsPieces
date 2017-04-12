@@ -13,6 +13,8 @@ function action() {
     }
 
     function count() {
+        document.getElementById("res").innerHTML = " ";
+
         var a = document.getElementsByName('first')[0].value,
             b = document.getElementsByName('second')[0].value,
             xhr = new XMLHttpRequest();
