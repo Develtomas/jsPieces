@@ -1,0 +1,1 @@
+javascript:var a=document.getElementsByClassName('tp-overlay tp-reset')[0];a.style.opacity=0;
