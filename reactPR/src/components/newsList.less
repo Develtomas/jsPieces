@@ -1,0 +1,45 @@
+@import "../styles/palette.less";
+
+.NewsListWrap {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: @background-color;
+}
+
+.NewslistsPage {
+    display: flex;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.NewslistsPage__menu {
+    width: 300px;
+    height: 100%;
+    position: fixed;
+    background-color: transparent;
+}
+
+.NewslistsPage__list {
+    // because material-ui uses inline styles
+    background-color: transparent !important;
+}
+
+.NewslistsPage__title {
+    padding: 5px 10px;
+}
+
+.NewslistsPage__news {
+    background-color: #fff;
+    margin-left: 300px;
+    width: 100%;
+    height: 100vh;
+}
+
+.NewsList__dropdown {
+    font-size: 16px;
+}
+
+.News__checkbox {
+    max-width: 40px;
+}
