@@ -30,12 +30,13 @@ const NewsPage = React.createClass({
                 <div className='NewsPage__news'>
                     {
                         Source.map(Source =>
-                            <div className='News' key={Source.id}>
+                            <div className='News'>
                                 <Checkbox className='News__checkbox' />
                                     <Router>
                                         <Link 
                                             className='News__text'
                                             to = {`/news/${Source.id}`}
+                                            key = {Source.id}
                                         >
                                             {Source.subject}
                                         </Link>

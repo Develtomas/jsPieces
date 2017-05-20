@@ -10,7 +10,7 @@
 }
 
 .NewsPage__news {
-    padding: 16px;
+    padding: 16px 16px 16px 0;
     width: 100%;
     max-width: 1000px;
 }
@@ -24,7 +24,6 @@
 
 .NewsPage__title {
     font-size: 20px;
-    margin-left: 32px;
 }
 
 .NewsPage__modal-title {
@@ -36,7 +35,6 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    margin: 0 16px;
     padding: 8px 0;
     border-bottom: 1px solid @divider-color;
 
@@ -50,4 +48,22 @@
     min-height: 20px;
     text-decoration: none;
     color: inherit;
+}
+
+.detailIn-enter {
+  opacity: 0.01;
+}
+
+.detailIn-enter.detailIn-enter-active {
+  opacity: 1;
+  transition: opacity 5000ms ease-in;
+}
+
+.detailIn-leave {
+  opacity: 1;
+}
+
+.detailIn-leave.detailIn-leave-active {
+  opacity: 0.01;
+  transition: opacity 3000ms ease-in;
 }

@@ -15,9 +15,8 @@ import './NewsList.less';
 
 const styles = {
   customWidth: {
-    width: 300,
 	fontSize: 16,
-	left: 10
+	paddingLeft: 0
   },
   menuItemStyle: {
 	  fontSize: 16,
@@ -58,7 +57,7 @@ const NewsList = React.createClass({
             		</div>
             		<div className='NewslistsPage__news'>
 						<Router>
-							<div>	
+							<div>
             					<Route exact path='/' component={NewsPage} />
 								<Route path='/news/:id' component={DetailPage} />
 							</div>

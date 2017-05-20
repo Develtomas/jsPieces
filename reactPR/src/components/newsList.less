@@ -1,7 +1,7 @@
 @import "../styles/palette.less";
+@import "../styles/media.less";
 
 .NewsListWrap {
-    width: 100vw;
     min-height: 100vh;
     background-color: @background-color;
 }
@@ -11,13 +11,19 @@
     height: 100%;
     margin: 0 auto;
     position: relative;
+    
+    @media @phone {
+        flex-flow: column wrap;
+    }
+    
+    @media @nonmob {
+        flex-flow: row wrap;
+    }
 }
 
 .NewslistsPage__menu {
-    width: 300px;
-    height: 100%;
-    position: fixed;
     background-color: transparent;
+    flex: 1;
 }
 
 .NewslistsPage__list {
@@ -26,14 +32,30 @@
 }
 
 .NewslistsPage__title {
-    padding: 5px 10px;
+    padding: 5px 16px;
 }
 
 .NewslistsPage__news {
     background-color: #fff;
-    margin-left: 300px;
-    width: 100%;
-    height: 100vh;
+
+    @media @phone {
+        flex: 1;
+    }
+
+    @media @tablet {
+        flex: 4;
+        height: 100vh;
+    }
+    
+    @media @desktop {
+        flex: 4;
+        height: 100vh;
+    }
+
+    @media @large {
+        flex: 5;
+        height: 100vh;
+    }
 }
 
 .NewsList__dropdown {
