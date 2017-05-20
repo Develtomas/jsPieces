@@ -1,0 +1,51 @@
+<!--Задание 1 сделать класс js и класс-наследник с плавным переключателем)-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="simple-collapse">
+    	<a href="#" class="collapse-control">Control</a>
+    	<div id="collapse-content" style="display: none">Content</div>
+	</div>
+<script type="text/javascript">
+    class Toggler {
+		constructor(toggler, content) {
+			this.toggler = document.getElementsByClassName(toggler)[0];
+			this.content = document.getElementById(content);
+			this.toggler.addEventListener('click', () => this.myToggle());
+		}
+
+		myToggle() {
+			if (this.content.style.display == 'none') {
+				this.content.style.display = 'block';
+			}
+			else {
+				this.content.style.display = 'none';
+			}
+		}
+	}
+
+	//let switcher = new Toggler('collapse-control', 'collapse-content');
+
+	class TogglerNew extends Toggler {
+		constructor(toggler, content) {
+			super(toggler, content);
+		}
+
+		myToggle() {
+			$(this.content).toggle("slow");
+		}
+	}
+
+	let switcher = new TogglerNew('collapse-control', 'collapse-content');
+</script>
+
+</body>
+</html>
