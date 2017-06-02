@@ -1,0 +1,1 @@
+let hk = 'hello kitty!'

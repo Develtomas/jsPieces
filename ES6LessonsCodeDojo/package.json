@@ -1,0 +1,17 @@
+{
+  "name": "es6",
+  "version": "1.0.0",
+  "description": "es6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "go": "babel src -d public --presets es2015 -w"
+  },
+  "author": "seleznev",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
