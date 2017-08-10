@@ -1,1 +1,1 @@
-javascript:var a=document.getElementsByClassName('tp-overlay tp-reset')[0];a.style.opacity=0;
+javascript:var a=document.getElementsByClassName('tp-reset tp-animate');for(var i=0;i<a.length;i++){a[i].style.opacity=0;}var b=document.getElementsByClassName('tp-modal-open')[0];b.classList.remove('tp-modal-open');
