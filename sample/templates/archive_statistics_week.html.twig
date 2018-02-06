@@ -1,0 +1,45 @@
+{% extends '@App/Report/archive_statistics.html.twig' %}
+{% block reportTitle %}Архив НС за неделю{% endblock %}
+{% block timeInputName %}Выберите неделю{% endblock %}
+
+{% block chartOptions %}
+    <li class="report__switcher__group__item">
+        <input id="archiveStatisticChart"
+               checked
+               disabled
+               type="checkbox"
+               data-key=""
+               data-type="expanded"
+               data-kind="dispatch">
+        <label for="archiveStatisticChart">График возникновения НС</label>
+        <ul id="diagramType">
+            <li>
+                <input id="columnarArchiveStatistic"
+                       name="diagramArchiveStatistic"
+                       type="radio"
+                       checked
+                       data-diagram="columnar"
+                       data-type="diagram"
+                       data-key="diagramm"
+                       data-kind="archive"
+                       class="with-gap">
+                <label for="columnarArchiveStatistic">колонки</label>
+            </li>
+            <li>
+                <input id="linearArchiveStatistic"
+                       name="diagramArchiveStatistic"
+                       type="radio"
+                       data-diagram="linear"
+                       data-type="diagram"
+                       data-key="diagramm"
+                       data-kind="archive"
+                       class="with-gap">
+                <label for="linearArchiveStatistic">линейный</label>
+            </li>
+        </ul>
+    </li>
+{% endblock %}
+
+{% block additionJS %}
+    <script src="{{ asset('build/archiveWeekReport.js') }}"></script>
+{% endblock %}

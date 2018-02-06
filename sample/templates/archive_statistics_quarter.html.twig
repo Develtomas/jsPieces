@@ -1,0 +1,32 @@
+{% extends '@App/Report/archive_statistics.html.twig' %}
+{% block reportTitle %}Архив НС за квартал{% endblock %}
+
+{% block reportFilter %}
+    <div class="col l12 s12 report__title">
+        <div class="report__filter">
+            <form id="reportFilter" data-mainurl="full" data-get="server" data-type="incident_archive_statistic">
+                <div class="report__filter__field report_week_month">
+                    <div>
+                        <label for="where_created_left_date">Выберите квартал</label>
+                        <div class="report__filter__field">
+                            <select id="where_created_left_date" name="quarter" class="quarter">
+                                <option disabled selected></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <label for="where_created_right_date">год</label>
+                        <div class="report__filter__field">
+                            <input type="number" id="where_created_right_date" name="year" min="2017">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block additionJS %}
+    <script src="{{ asset('build/archiveQuarterReport.js') }}"></script>
+{% endblock %}

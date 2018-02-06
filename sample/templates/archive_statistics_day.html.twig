@@ -1,0 +1,8 @@
+{% extends '@App/Report/archive_statistics.html.twig' %}
+{% block reportTitle %}Архив НС за день{% endblock %}
+{% block title %}Архив НС за день{% endblock %}
+{% block chartOptions %}{% endblock %}
+{% block timeInputName %}Выберите день{% endblock %}
+{% block additionJS %}
+    <script src="{{ asset('build/archiveDayReport.js') }}"></script>
+{% endblock %}

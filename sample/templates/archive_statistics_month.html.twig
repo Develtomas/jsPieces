@@ -1,0 +1,6 @@
+{% extends '@App/Report/archive_statistics.html.twig' %}
+{% block reportTitle %}Архив НС за месяц{% endblock %}
+{% block timeInputName %}Выберите месяц{% endblock %}
+{% block additionJS %}
+    <script src="{{ asset('build/archiveMonthReport.js') }}"></script>
+{% endblock %}

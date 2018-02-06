@@ -1,0 +1,297 @@
+{% extends '@App/report.html.twig' %}
+{% block reportTitle %}Архив НС за неделю{% endblock %}
+
+{% block mainInfoFields %}
+    <div class="col l12 s12 report__common-info">
+    </div>
+    <script type="text/template" id="commoninfoTemplate">
+        <div class="row">
+            <div class="report__common-info__field">
+                <h7>Дата формирования:</h7>
+                <span><%=data.created%></span>
+            </div>
+            <div class="report__common-info__field">
+                <h7>Всего НС:</h7>
+                <span><%=data.totalCount%></span>
+            </div>
+        </div>
+    </script>
+{% endblock %}
+{% block reportFilter %}
+    <div class="col l12 s12 report__title">
+        <div class="report__filter">
+            <form id="reportFilter" data-mainurl="full" data-get="server" data-type="incident_archive_statistic">
+                <div class="report__filter__field report_week_month">
+                    <div>
+                        <label for="where_created_left_date">{% block timeInputName %}Выберите неделю{% endblock %}</label>
+                        <div class="report__filter__field">
+                            <input type="text" id="where_created_left_date" class="datepicker" name="date">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block reportBlockSwitcher %}
+    <div class="report__switcher report__block">
+        {#TODO use few groups, if you have more than one switch column #}
+        <div class="report__switcher__group" data-type="weekday">
+            <ul>
+                {% block chartOptions %}
+                <li class="report__switcher__group__item">
+                    <input id="archiveStatisticChart"
+                           checked
+                           type="checkbox"
+                           data-key=""
+                           data-type="expanded"
+                           data-kind="dispatch">
+                    <label for="archiveStatisticChart">График возникновения НС</label>
+                    <ul id="diagramType">
+                        <li>
+                            <input id="columnarArchiveStatistic"
+                                   name="diagramArchiveStatistic"
+                                   type="radio"
+                                   checked
+                                   data-diagram="columnar"
+                                   data-type="diagram"
+                                   data-key="diagramm"
+                                   data-kind="archive"
+                                   class="with-gap">
+                            <label for="columnarArchiveStatistic">колонки</label>
+                        </li>
+                        <li>
+                            <input id="linearArchiveStatistic"
+                                   name="diagramArchiveStatistic"
+                                   type="radio"
+                                   data-diagram="linear"
+                                   data-type="diagram"
+                                   data-key="diagramm"
+                                   data-kind="archive"
+                                   class="with-gap">
+                            <label for="linearArchiveStatistic">линейный</label>
+                        </li>
+                    </ul>
+                        <div class="report__filter">
+                            <div>
+                                <label>Группировка на графике</label>
+                                <div class="report__filter__field">
+                                    <select class="chartScale">
+                                        {% for key, value in diagramGrouped %}
+                                            <option value="{{ key }}"> {{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </li>
+                {% endblock %}
+                <li class="report__switcher__group__item">
+                    <input id="shortArchieveStatisticSource"
+                           type="checkbox"
+                           data-key="by-system"
+                           data-template="short"
+                           data-kind="archive">
+                    <label for="shortArchieveStatisticSource">По источникам (кратко)</label>
+                </li>
+                <li class="report__switcher__group__item">
+                    <input id="shortArchieveStatisticViolation"
+                           type="checkbox"
+                           data-key="violation"
+                           data-template="regulation"
+                           data-kind="archive">
+                    <label for="shortArchieveStatisticViolation">По нарушениям регламента (кратко)</label>
+                </li>
+                <li class="report__switcher__group__item">
+                    <input id="shortArchieveStatisticOperator"
+                           type="checkbox"
+                           data-key="by-organization"
+                           data-template="transport"
+                           data-kind="archive">
+                    <label for="shortArchieveStatisticOperator">По транспортным операторам (кратко)</label>
+                </li>
+                <li class="report__switcher__group__item">
+                    <input id="fullArchieveStatisticViolation"
+                           type="checkbox"
+                           data-template="chronology"
+                           data-key="full"
+                           data-kind="archive">
+                    <label for="fullArchieveStatisticViolation">Хронология нарушений (подробно)</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block optionalBlocks %}
+    <div class="col l12 s12 report__chart">
+        <div class="report__chart__circular-diagram-archive">
+        </div>
+        <div class="report__chart__columnar-diagram-archive">
+        </div>
+        <div class="report__chart__linear-diagram-archive">
+        </div>
+    </div>
+    <div class="col l12 s12 report__list">
+        <div class="col l12 s12 report__list__by-system-short">
+        </div>
+        <div class="col l6 s6 report__list__violation-regulation">
+        </div>
+        <div class="col l6 s6 report__list__by-organization-transport">
+        </div>
+        <div class="col l12 s12 report__list__full-chronology">
+        </div>
+    </div>
+    <script type="text/template" id="by-systemTemplate">
+        <div class="row">
+            <h7>По источникам (кратко)</h7>
+            <div class="col s12">
+                <div class="table__line no-tabs-table">
+                    <table class="page-table-data bordered">
+                        <thead>
+                            <tr>
+                                <th>Всего карточек НС</th>
+                                <th>
+                                    <% let total=0; _.each(data.json, (row)=>{total+=row.countIncident}); %>
+                                    <%=total%>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="incidentList">
+                            <% _.each(data.json, (row) => { %>
+                            <tr>
+                                <td>из <%=row.name%></td>
+                                <td><%=row.countIncident%></td>
+                            <tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="violationTemplate">
+        <div class="row">
+            <h7>По нарушениям регламента (кратко)</h7>
+            <div class="col s12">
+                <div class="table__line no-tabs-table">
+                    <table class="page-table-data bordered">
+                        <thead>
+                            <tr>
+                                <th>Всего карточек НС</th>
+                                <th><%=data.json.all%></th>
+                            </tr>
+                        </thead>
+                        <tbody id="incidentList">
+                            <tr>
+                                <td>с нарушением</td>
+                                <td><%=data.json.violation%></td>
+                            <tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="by-organizationTemplate">
+        <div class="row">
+            <h7>По транспортным операторам (кратко)</h7>
+            <div class="col s12">
+                <div class="table__line no-tabs-table">
+                    <table class="page-table-data bordered">
+                        <thead>
+                            <tr>
+                                <th>Всего карточек НС</th>
+                                <th>
+                                    <% let total=0; _.each(data.json, (row)=>{total+=row.countIncident}); %>
+                                    <%=total%>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="incidentList">
+                            <% let sortData = _.sortBy(data.json, 'countIncident').reverse() %>
+                            <% _.each(sortData, (row) => { %>
+                            <tr>
+                                <td>по <%=row.name%></td>
+                                <td><%=row.countIncident%></td>
+                            <tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="fullTemplate">
+        <div class="row">
+            <h7>Хронология нарушений</h7>
+            <div class="col s12">
+                <div class="table__line no-tabs-table">
+                    <table class="page-table-data bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                №КНС
+                            </th>
+                            <th>
+                                Дата/время
+                            </th>
+                            <th>
+                                Тип НС
+                            </th>
+                            <th>
+                                Оператор
+                            </th>
+                            <th>
+                                Признак ВИС
+                            </th>
+                            <th>
+                                Нарушение регламента
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="incidentList">
+                        <% let violationSum=0; %>
+                        <% _.each(data.json.reverse(), (row) => { %>
+                            <tr>
+                                <td><a href="<%= Routing.generate('view_incident', {'id': row.id }) %>" title="НС">НС№<%=row.id%></a></td>
+                                <td><%=row.created%></td>
+                                <td><%=row.type%></td>
+                                <td><%=row.organization%></td>
+                                <td><%=row.extSystem%></td>
+                                <td><% if (row.violation) { violationSum++; %><i class="material-icons">done</i><% } %></td>
+                            </tr>
+                        <% }); %>
+                            <tr>
+                                <td>ИТОГО</td>
+                                <td><%=data.json.length%></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><%=violationSum%></td>
+                            <tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="columnardigrammTemplate">
+        <div class="col l6 s12">
+            <canvas id="columnarDiagrammarchive" class="chart"></canvas>
+        </div>
+    </script>
+    <script type="text/template" id="lineardiagrammTemplate">
+        <div class="col l6 s12">
+            <canvas id="linearDiagrammarchive" class="chart"></canvas>
+        </div>
+    </script>
+    <script type="text/template" id="reportEmptyTemplate">
+        Нет данных
+    </script>
+{% endblock %}
+
+{% block additionJS %}
+    <script src="{{ asset('build/archiveWeekReport.js') }}"></script>
+{% endblock %}
