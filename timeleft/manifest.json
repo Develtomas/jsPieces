@@ -1,0 +1,18 @@
+{
+   "manifest_version": 3,
+   "name": "timeleft",
+   "version": "1.0",
+   "description": "show alert when timeleft",
+   "icons":
+	{
+		"128":"128.png"
+	},
+   "content_scripts": [
+       {
+           "matches": [ "https://srm.magnit.ru/user/competitive-procedures/online-bidding/*" ],
+           "js": [ "timeleft.js" ],
+            "css": ["timeleft.css"],
+		      "run_at": "document_end"
+       }
+   ]
+}

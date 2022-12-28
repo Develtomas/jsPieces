@@ -1,0 +1,17 @@
+{
+   "manifest_version": 3,
+   "name": "window healer",
+   "version": "1.0",
+   "description": "correct window",
+   "icons":
+	{
+		"128":"128.png"
+	},
+   "content_scripts": [
+       {
+           "matches": [ "https://srm.magnit.ru/*" ],
+           "js": [ "app.js" ],
+		   "run_at": "document_end"
+       }
+   ]
+}
